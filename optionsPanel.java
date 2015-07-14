@@ -41,13 +41,13 @@ public class optionsPanel extends Observable{
     	JPanel extensionPanel=new JPanel();	//Extension chooser
     	fileExt=new JTextField("java",10);
     	extension="java";
-    	fileExt.addActionListener(new FieldListener());
+    	fileExt.addActionListener(new ButtonListener());
     	extensionPanel.add(new JLabel("File extension "));
     	extensionPanel.add(fileExt);
     	
     	JPanel keyPanel=new JPanel();	//Key value to search
     	keyword=new JTextField(10);
-    	keyword.addActionListener(new FieldListener());
+    	keyword.addActionListener(new ButtonListener());
     	keyPanel.add(new JLabel("Search parameter "));
     	keyPanel.add(keyword);	
     	
@@ -78,6 +78,8 @@ public class optionsPanel extends Observable{
     
     private class ButtonListener implements ActionListener{
     	public void actionPerformed(ActionEvent event){
+    		extension=fileExt.getText();	//Get text from textFields
+    		keyString=keyword.getText();
     		if(event.getSource()==fileChoose){
     			fileChooser.showOpenDialog(optionsPanel);
 	    		if(JFileChooser.APPROVE_OPTION==0){
@@ -94,6 +96,7 @@ public class optionsPanel extends Observable{
     				catch(IOException except){	//continue process in case of previously occured error
     					System.out.println(except);
     				}
+    				scan.useDelimiter("");
     				temp="";
     				while(scan.hasNext())	//get file name
     					temp+=scan.next();
@@ -111,12 +114,6 @@ public class optionsPanel extends Observable{
     	}
     }
     
-    private class FieldListener implements ActionListener{
-    	public void actionPerformed(ActionEvent event){
-    			extension=fileExt.getText();	//Get text from textFields
-    			keyString=keyword.getText();
-    	}
-    }
     
     private class RBListener implements ActionListener{
     	public void actionPerformed(ActionEvent event){	//Listen the radio buttons
